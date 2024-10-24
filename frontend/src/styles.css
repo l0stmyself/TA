@@ -681,3 +681,66 @@ code {
   }
 }
 
+/* Map and Location Styles */
+.motorcycle-booking {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.location-info {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.selected-location {
+  background: var(--surface);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.selected-location p {
+  margin: 0.5rem 0;
+}
+
+.map-container {
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.booking-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+/* Leaflet Custom Styles */
+.leaflet-control-geocoder {
+  background: var(--surface) !important;
+  border: 1px solid var(--primary) !important;
+}
+
+.leaflet-control-geocoder-form input {
+  background: var(--surface) !important;
+  color: var(--on-surface) !important;
+  border: none !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: var(--surface) !important;
+  color: var(--on-surface) !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .map-container {
+    height: 300px;
+  }
+}

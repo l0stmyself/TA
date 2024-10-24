@@ -4,8 +4,10 @@ import axios from 'axios';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    mobileNumber: '',
     password: '',
     confirmPassword: ''
   });
@@ -25,7 +27,6 @@ const Register = () => {
     setError('');
     setSuccess('');
 
-    // Password validation
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -37,15 +38,17 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/api/auth/register', {
-        name: formData.name,
+      await axios.post('http://localhost:4000/api/auth/register', {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
         email: formData.email,
+        mobileNumber: formData.mobileNumber,
         password: formData.password
       });
 
       setSuccess('Registration successful! Redirecting to login...');
       setTimeout(() => {
-        navigate('/');
+        navigate('/login');
       }, 2000);
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
@@ -69,9 +72,20 @@ const Register = () => {
             <div className="form-group">
               <input
                 type="text"
-                name="name"
-                placeholder="Full Name"
-                value={formData.name}
+                name="firstName"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={formData.lastName}
                 onChange={handleChange}
                 required
               />
@@ -83,6 +97,17 @@ const Register = () => {
                 name="email"
                 placeholder="Email"
                 value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <input
+                type="tel"
+                name="mobileNumber"
+                placeholder="Mobile Number"
+                value={formData.mobileNumber}
                 onChange={handleChange}
                 required
               />
