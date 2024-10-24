@@ -7,6 +7,7 @@ import UserMenu from './components/UserMenu';
 import Services from './components/Services';
 import Transportation from './components/Transportation';
 import PurchaseService from './components/PurchaseService';
+import MotorcycleBooking from './components/MotorcycleBooking';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -60,6 +61,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/services" element={user ? <Services /> : <Navigate to="/login" />} />
           <Route path="/services/transportation" element={user ? <Transportation /> : <Navigate to="/login" />} />
+          <Route path="/services/transportation/motorcycle" element={user ? <MotorcycleBooking /> : <Navigate to="/login" />} />
           <Route path="/services/purchase" element={user ? <PurchaseService /> : <Navigate to="/login" />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

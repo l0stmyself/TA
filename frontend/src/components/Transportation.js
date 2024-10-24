@@ -25,7 +25,9 @@ const Transportation = () => {
               <li>Ideal for short distances</li>
               <li>Fast arrival time</li>
             </ul>
-            <button className="btn btn-primary">Book Now</button>
+            <Link to="/services/transportation/motorcycle" className="btn btn-primary">
+              Book Now
+            </Link>
           </div>
 
           <div className="transport-option-card">
