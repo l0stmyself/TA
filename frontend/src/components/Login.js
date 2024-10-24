@@ -41,31 +41,33 @@ const Login = ({ onLoginSuccess }) => {
       <div className="form-container">
         <h2>Login</h2>
         {error && <div className="error-message">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
-          <div className="form-group">
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          
-          <button type="submit" className="btn btn-primary">Login</button>
-        </form>
+        <div className="form-wrapper">
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="form-group">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <button type="submit" className="btn btn-primary">Login</button>
+          </form>
+        </div>
       </div>
     </>
   );

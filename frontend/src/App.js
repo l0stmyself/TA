@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 import './styles.css'; // Import the new styles.css
 import Register from './components/Register';
 import Login from './components/Login';
@@ -10,6 +10,7 @@ import PurchaseService from './components/PurchaseService';
 
 function App() {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate(); // Add this hook
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -26,45 +27,44 @@ function App() {
     setUser(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    navigate('/'); // Navigate to landing page instead of login
   };
 
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <div className="header-wrapper">
-            <div className="header-content">
-              <h1>TA Transportation</h1>
-            </div>
-            <div className="header-actions">
-              {user ? (
-                <UserMenu user={user} onLogout={handleLogout} />
-              ) : (
-                <div className="auth-buttons">
-                  <a href="/login" className="btn btn-primary">Login</a>
-                  <a href="/register" className="btn btn-secondary">Register Now</a>
-                </div>
-              )}
-            </div>
-            <div className="header-tagline">
-              <p className="tagline">Your Campus Transportation & Delivery Solution</p>
-            </div>
+    <div className="App">
+      <header className="App-header">
+        <div className="header-wrapper">
+          <div className="header-content">
+            <h1>TA Transportation</h1>
           </div>
-        </header>
+          <div className="header-actions">
+            {user ? (
+              <UserMenu user={user} onLogout={handleLogout} />
+            ) : (
+              <div className="auth-buttons">
+                <a href="/login" className="btn btn-primary">Login</a>
+                <a href="/register" className="btn btn-secondary">Register Now</a>
+              </div>
+            )}
+          </div>
+          <div className="header-tagline">
+            <p className="tagline">Your Campus Transportation & Delivery Solution</p>
+          </div>
+        </div>
+      </header>
 
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={user ? <Navigate to="/services" /> : <LandingPage />} />
-            <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/services" element={user ? <Services /> : <Navigate to="/login" />} />
-            <Route path="/services/transportation" element={user ? <Transportation /> : <Navigate to="/login" />} />
-            <Route path="/services/purchase" element={user ? <PurchaseService /> : <Navigate to="/login" />} />
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </main>
-      </div>
-    </Router>
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={user ? <Navigate to="/services" /> : <LandingPage />} />
+          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/services" element={user ? <Services /> : <Navigate to="/login" />} />
+          <Route path="/services/transportation" element={user ? <Transportation /> : <Navigate to="/login" />} />
+          <Route path="/services/purchase" element={user ? <PurchaseService /> : <Navigate to="/login" />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      </main>
+    </div>
   );
 }
 
@@ -97,4 +97,13 @@ const LandingPage = () => (
   </section>
 );
 
-export default App;
+// Wrapper component with the single Router
+const AppWrapper = () => {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+};
+
+export default AppWrapper; // Export AppWrapper instead of App
