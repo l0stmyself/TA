@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -10,6 +10,7 @@ const MotorcycleBooking = () => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const markerRef = useRef(null);
+  const navigate = useNavigate();
 
   // CMU coordinates
   const defaultLocation = {
@@ -77,6 +78,13 @@ const MotorcycleBooking = () => {
       .openPopup();
   };
 
+  const handleNext = () => {
+    // Navigate to trip details with pickup location
+    navigate('/services/transportation/motorcycle/trip-details', {
+      state: { pickup: selectedLocation }
+    });
+  };
+
   return (
     <div className="motorcycle-booking-page">
       <div className="breadcrumb">
@@ -113,6 +121,12 @@ const MotorcycleBooking = () => {
             <div className="selected-location-info">
               <h3>Selected Location:</h3>
               <p>{selectedLocation.address}</p>
+              <button 
+                className="btn btn-primary"
+                onClick={handleNext}
+              >
+                Next
+              </button>
             </div>
           )}
         </div>
