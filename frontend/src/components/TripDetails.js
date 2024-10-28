@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import driver1Image from '../images/drivers/driver1.jpeg';
+import driver2Image from '../images/drivers/driver2.jpeg';
 
 const TripDetails = () => {
   const location = useLocation();
@@ -215,7 +217,7 @@ const mockDrivers = [
   {
     id: 1,
     name: "John Doe",
-    photo: "https://via.placeholder.com/150",
+    photo: driver1Image,
     contact: "+63 912 345 6789",
     rating: 4.8,
     vehicle: {
@@ -226,7 +228,7 @@ const mockDrivers = [
   {
     id: 2,
     name: "Jane Smith",
-    photo: "https://via.placeholder.com/150",
+    photo: driver2Image,
     contact: "+63 923 456 7890",
     rating: 4.9,
     vehicle: {
