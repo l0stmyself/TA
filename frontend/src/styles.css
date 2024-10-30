@@ -852,3 +852,94 @@ code {
 .modal .btn {
   margin-top: 1rem;
 }
+
+/* Trip Details Page */
+.booking-actions {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.btn-success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #45a049;
+}
+
+/* My Trips Page */
+.trips-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.trips-list {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.trip-card {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.trip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.status {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-booked {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.status-completed {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-cancelled {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.trip-details {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.locations {
+  border-left: 3px solid var(--primary);
+  padding-left: 1rem;
+}
+
+.driver-info {
+  background: rgba(0,0,0,0.05);
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.trip-metadata {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 768px) {
+  .trips-container {
+    padding: 1rem;
+  }
+}

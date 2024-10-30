@@ -1,37 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const UserMenu = ({ user, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef();
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    onLogout();
-    setIsOpen(false);
-  };
 
   return (
-    <div className="user-menu" ref={menuRef}>
-      <button className="user-menu-button" onClick={() => setIsOpen(!isOpen)}>
-        {user.firstName}
-      </button>
-      
+    <div className="user-menu">
+      <div className="user-menu-trigger" onClick={() => setIsOpen(!isOpen)}>
+        <span>{user.name}</span>
+        <i className="fas fa-chevron-down"></i>
+      </div>
       {isOpen && (
-        <div className="dropdown-menu">
-          <button onClick={() => setIsOpen(false)}>Profile</button>
-          <button onClick={handleLogout}>Logout</button>
+        <div className="user-menu-dropdown">
+          <Link to="/my-trips" className="menu-item">
+            <i className="fas fa-car"></i> My Trips
+          </Link>
+          <div className="menu-item" onClick={onLogout}>
+            <i className="fas fa-sign-out-alt"></i> Logout
+          </div>
         </div>
       )}
     </div>

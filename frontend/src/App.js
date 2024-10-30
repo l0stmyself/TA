@@ -10,6 +10,8 @@ import PurchaseService from './components/PurchaseService';
 import MotorcycleBooking from './components/MotorcycleBooking';
 import TripDetails from './components/TripDetails';
 import LandingPage from './components/LandingPage'; // Assuming you move LandingPage to its own component
+import DestinationBooking from './components/DestinationBooking';
+import MyTrips from './components/MyTrips';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -109,8 +111,16 @@ function App() {
             element={user ? <TripDetails /> : <Navigate to="/login" state={{ from: '/services/transportation/motorcycle/trip-details' }} />} 
           />
           <Route 
+            path="/services/transportation/motorcycle/destination" 
+            element={user ? <DestinationBooking /> : <Navigate to="/login" />} 
+          />
+          <Route 
             path="/services/purchase" 
             element={user ? <PurchaseService /> : <Navigate to="/login" state={{ from: '/services/purchase' }} />} 
+          />
+          <Route 
+            path="/my-trips" 
+            element={user ? <MyTrips /> : <Navigate to="/login" />} 
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

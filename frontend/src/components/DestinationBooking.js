@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-const MotorcycleBooking = () => {
+const DestinationBooking = () => {
+  const location = useLocation();
+  const { pickup } = location.state || {};
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,26 +14,28 @@ const MotorcycleBooking = () => {
   const markerRef = useRef(null);
   const navigate = useNavigate();
 
-  // CMU coordinates
-  const defaultLocation = {
-    lat: 7.8535,
-    lng: 125.0504
-  };
-
   useEffect(() => {
+    if (!pickup) {
+      navigate('/services/transportation/motorcycle');
+      return;
+    }
+
     if (!mapRef.current) return;
 
-    // Initialize map
-    const map = L.map(mapRef.current).setView([defaultLocation.lat, defaultLocation.lng], 15);
+    const map = L.map(mapRef.current).setView([pickup.lat, pickup.lng], 15);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Add default marker for CMU
-    const marker = L.marker([defaultLocation.lat, defaultLocation.lng]).addTo(map);
-    marker.bindPopup('Central Mindanao University').openPopup();
+    // Add pickup marker
+    L.marker([pickup.lat, pickup.lng])
+      .bindPopup('Pickup: ' + pickup.address)
+      .addTo(map);
 
+    // Add destination marker
+    const marker = L.marker([pickup.lat, pickup.lng]).addTo(map);
+    
     mapInstanceRef.current = map;
     markerRef.current = marker;
 
@@ -40,7 +44,7 @@ const MotorcycleBooking = () => {
         map.remove();
       }
     };
-  }, [defaultLocation.lat, defaultLocation.lng]);
+  }, [pickup, navigate]);
 
   const handleSearch = async (query) => {
     setSearchQuery(query);
@@ -71,7 +75,6 @@ const MotorcycleBooking = () => {
     setSearchQuery(location.display_name);
     setSearchResults([]);
 
-    // Update map and marker
     mapInstanceRef.current.setView([newLocation.lat, newLocation.lng], 15);
     markerRef.current.setLatLng([newLocation.lat, newLocation.lng])
       .bindPopup(location.display_name)
@@ -79,8 +82,11 @@ const MotorcycleBooking = () => {
   };
 
   const handleNext = () => {
-    navigate('/services/transportation/motorcycle/destination', {
-      state: { pickup: selectedLocation }
+    navigate('/services/transportation/motorcycle/trip-details', {
+      state: { 
+        pickup: pickup,
+        destination: selectedLocation 
+      }
     });
   };
 
@@ -89,12 +95,13 @@ const MotorcycleBooking = () => {
       <div className="breadcrumb">
         <span><Link to="/services">Services</Link></span>
         <span><Link to="/services/transportation">Transportation</Link></span>
-        <span>Motorcycle Booking</span>
+        <span><Link to="/services/transportation/motorcycle">Pickup</Link></span>
+        <span>Destination</span>
       </div>
 
       <div className="booking-container">
         <div className="location-search">
-          <h2>Enter Pickup Location</h2>
+          <h2>Enter Drop-off Location</h2>
           <div className="search-box">
             <input
               type="text"
@@ -136,4 +143,4 @@ const MotorcycleBooking = () => {
   );
 };
 
-export default MotorcycleBooking;
+export default DestinationBooking; 
