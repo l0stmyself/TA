@@ -5,13 +5,13 @@ import Register from './components/Register';
 import Login from './components/Login';
 import UserMenu from './components/UserMenu';
 import Services from './components/Services';
-import Transportation from './components/Transportation';
-import PurchaseService from './components/PurchaseService';
-import MotorcycleBooking from './components/MotorcycleBooking';
-import TripDetails from './components/TripDetails';
+import WrappedTransportation from './components/Transportation';
+import WrappedMotorcycleBooking from './components/MotorcycleBooking';
+import WrappedTripDetails from './components/TripDetails';
+import WrappedDestinationBooking from './components/DestinationBooking';
+import WrappedPurchaseService from './components/PurchaseService';
+import WrappedMyTrips from './components/MyTrips';
 import LandingPage from './components/LandingPage'; // Assuming you move LandingPage to its own component
-import DestinationBooking from './components/DestinationBooking';
-import MyTrips from './components/MyTrips';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -85,43 +85,16 @@ function App() {
 
       <main className="main-content">
         <Routes>
-          <Route path="/" element={user ? <Navigate to="/services" /> : <LandingPage />} />
-          <Route 
-            path="/login" 
-            element={user ? <Navigate to="/services" /> : <Login onLoginSuccess={handleLoginSuccess} />} 
-          />
-          <Route 
-            path="/register" 
-            element={user ? <Navigate to="/services" /> : <Register />} 
-          />
-          <Route 
-            path="/services" 
-            element={user ? <Services /> : <Navigate to="/login" state={{ from: '/services' }} />} 
-          />
-          <Route 
-            path="/services/transportation" 
-            element={user ? <Transportation /> : <Navigate to="/login" state={{ from: '/services/transportation' }} />} 
-          />
-          <Route 
-            path="/services/transportation/motorcycle" 
-            element={user ? <MotorcycleBooking /> : <Navigate to="/login" state={{ from: '/services/transportation/motorcycle' }} />} 
-          />
-          <Route 
-            path="/services/transportation/motorcycle/trip-details" 
-            element={user ? <TripDetails /> : <Navigate to="/login" state={{ from: '/services/transportation/motorcycle/trip-details' }} />} 
-          />
-          <Route 
-            path="/services/transportation/motorcycle/destination" 
-            element={user ? <DestinationBooking /> : <Navigate to="/login" />} 
-          />
-          <Route 
-            path="/services/purchase" 
-            element={user ? <PurchaseService /> : <Navigate to="/login" state={{ from: '/services/purchase' }} />} 
-          />
-          <Route 
-            path="/my-trips" 
-            element={user ? <MyTrips /> : <Navigate to="/login" />} 
-          />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/services/transportation" element={<WrappedTransportation />} />
+          <Route path="/services/transportation/motorcycle" element={<WrappedMotorcycleBooking />} />
+          <Route path="/services/transportation/motorcycle/trip-details" element={<WrappedTripDetails />} />
+          <Route path="/services/transportation/motorcycle/destination" element={<WrappedDestinationBooking />} />
+          <Route path="/services/purchase" element={<WrappedPurchaseService />} />
+          <Route path="/my-trips" element={<WrappedMyTrips />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import ProtectedRoute from './ProtectedRoute';
 
 const MotorcycleBooking = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -136,4 +137,10 @@ const MotorcycleBooking = () => {
   );
 };
 
-export default MotorcycleBooking;
+export default function WrappedMotorcycleBooking() {
+  return (
+    <ProtectedRoute>
+      <MotorcycleBooking />
+    </ProtectedRoute>
+  );
+}

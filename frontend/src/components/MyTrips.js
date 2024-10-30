@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import ProtectedRoute from './ProtectedRoute';
 
 const MyTrips = () => {
   const [trips, setTrips] = useState([]);
@@ -79,4 +80,10 @@ const MyTrips = () => {
   );
 };
 
-export default MyTrips; 
+export default function WrappedMyTrips() {
+  return (
+    <ProtectedRoute>
+      <MyTrips />
+    </ProtectedRoute>
+  );
+} 

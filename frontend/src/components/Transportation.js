@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
 
 const Transportation = () => {
   return (
@@ -71,4 +72,10 @@ const Transportation = () => {
   );
 };
 
-export default Transportation;
+export default function WrappedTransportation() {
+  return (
+    <ProtectedRoute>
+      <Transportation />
+    </ProtectedRoute>
+  );
+}

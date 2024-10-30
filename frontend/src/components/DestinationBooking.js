@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import ProtectedRoute from './ProtectedRoute';
 
 const DestinationBooking = () => {
   const location = useLocation();
@@ -143,4 +144,10 @@ const DestinationBooking = () => {
   );
 };
 
-export default DestinationBooking; 
+export default function WrappedDestinationBooking() {
+  return (
+    <ProtectedRoute>
+      <DestinationBooking />
+    </ProtectedRoute>
+  );
+} 

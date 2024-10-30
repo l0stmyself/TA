@@ -7,6 +7,7 @@ import driver1Image from '../images/drivers/driver1.jpeg';
 import driver2Image from '../images/drivers/driver2.jpeg';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import ProtectedRoute from './ProtectedRoute';
 
 const mockDrivers = [
   {
@@ -269,4 +270,10 @@ const TripDetails = () => {
   );
 };
 
-export default TripDetails;
+export default function WrappedTripDetails() {
+  return (
+    <ProtectedRoute>
+      <TripDetails />
+    </ProtectedRoute>
+  );
+}

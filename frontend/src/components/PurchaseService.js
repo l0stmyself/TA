@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
 
 const PurchaseService = () => {
   return (
@@ -101,4 +102,10 @@ const PurchaseService = () => {
   );
 };
 
-export default PurchaseService;
+export default function WrappedPurchaseService() {
+  return (
+    <ProtectedRoute>
+      <PurchaseService />
+    </ProtectedRoute>
+  );
+}
