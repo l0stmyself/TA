@@ -39,6 +39,8 @@ const TripDetails = () => {
   const { pickup, destination } = location.state || {};
   const [showDrivers, setShowDrivers] = useState(false);
   const [selectedDriver, setSelectedDriver] = useState(null);
+  const [distance, setDistance] = useState(0);
+  const [cost, setCost] = useState(0);
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const markersRef = useRef([]);
@@ -77,6 +79,16 @@ const TripDetails = () => {
 
       markersRef.current.push(pickupMarker, destinationMarker);
 
+      // Calculate distance in kilometers
+      const pickupLatLng = L.latLng(pickup.lat, pickup.lng);
+      const destinationLatLng = L.latLng(destination.lat, destination.lng);
+      const distanceInMeters = pickupLatLng.distanceTo(destinationLatLng);
+      const distanceInKm = (distanceInMeters / 1000).toFixed(2);
+      
+      // Set distance and calculate cost (₱10 per km)
+      setDistance(Number(distanceInKm));
+      setCost(Number(distanceInKm) * 10);
+
       // Draw line between markers
       const latlngs = [
         [pickup.lat, pickup.lng],
@@ -108,6 +120,8 @@ const TripDetails = () => {
         pickupLocation: pickup,
         dropLocation: destination,
         status: 'BOOKED',
+        distance: distance,
+        cost: cost,
         driver: {
           name: selectedDriver.name,
           contact: selectedDriver.contact,
@@ -168,6 +182,19 @@ const TripDetails = () => {
           <div className="location-card">
             <h3>Destination</h3>
             <p>{destination.address}</p>
+          </div>
+        </div>
+
+        <div className="trip-summary">
+          <div className="summary-card">
+            <div className="summary-item">
+              <h3>Distance</h3>
+              <p>{distance} kilometers</p>
+            </div>
+            <div className="summary-item">
+              <h3>Estimated Cost</h3>
+              <p>₱{cost.toFixed(2)}</p>
+            </div>
           </div>
         </div>
 

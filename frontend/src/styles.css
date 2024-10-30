@@ -976,3 +976,33 @@ code {
   margin: 0;
   color: #666;
 }
+
+.trip-summary {
+  margin: 20px 0;
+}
+
+.summary-card {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-item h3 {
+  color: #aeaeae;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.summary-item p {
+  color: #aeaeae;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+}
