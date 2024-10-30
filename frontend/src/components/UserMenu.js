@@ -7,7 +7,7 @@ const UserMenu = ({ user, onLogout }) => {
   return (
     <div className="user-menu">
       <div className="user-menu-trigger" onClick={() => setIsOpen(!isOpen)}>
-        <span>{user.name}</span>
+        <span style={{marginRight: '0.5rem'}}>{user.firstName}</span>
         <i className="fas fa-chevron-down"></i>
       </div>
       {isOpen && (
