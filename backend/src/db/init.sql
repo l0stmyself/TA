@@ -13,13 +13,14 @@ CREATE TABLE IF NOT EXISTS trips (
     user_id INTEGER REFERENCES users(id),
     pickup_location JSONB NOT NULL,
     drop_location JSONB NOT NULL,
-    status VARCHAR(20) NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    distance DECIMAL(10,2) NOT NULL,
+    cost DECIMAL(10,2) NOT NULL,
     driver_name VARCHAR(100) NOT NULL,
-    driver_contact VARCHAR(20) NOT NULL,
+    driver_contact VARCHAR(50) NOT NULL,
     driver_photo TEXT NOT NULL,
     vehicle_model VARCHAR(100) NOT NULL,
-    vehicle_plate VARCHAR(20) NOT NULL,
-    driver_rating DECIMAL(2,1) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    vehicle_plate VARCHAR(50) NOT NULL,
+    driver_rating DECIMAL(3,1) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

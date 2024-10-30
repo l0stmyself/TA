@@ -55,6 +55,10 @@ const MyTrips = () => {
                     <p><strong>From:</strong> {trip.pickupLocation.address}</p>
                     <p><strong>To:</strong> {trip.dropLocation.address}</p>
                   </div>
+                  <div className="trip-summary">
+                    <p><strong>Distance:</strong> {typeof trip.distance === 'number' ? trip.distance.toFixed(2) : trip.distance} kilometers</p>
+                    <p><strong>Cost:</strong> ₱{typeof trip.cost === 'number' ? trip.cost.toFixed(2) : parseFloat(trip.cost).toFixed(2)}</p>
+                  </div>
                   <div className="driver-info">
                     <h4>Driver</h4>
                     <p>{trip.driver.name}</p>

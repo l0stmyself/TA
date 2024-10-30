@@ -1006,3 +1006,14 @@ code {
   font-weight: 500;
   margin: 0;
 }
+
+.trip-summary {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.trip-summary p {
+  margin: 5px 0;
+  color: #aeaeae;
+}

@@ -85,9 +85,10 @@ const TripDetails = () => {
       const distanceInMeters = pickupLatLng.distanceTo(destinationLatLng);
       const distanceInKm = (distanceInMeters / 1000).toFixed(2);
       
-      // Set distance and calculate cost (₱10 per km)
+      // Set distance and calculate cost (₱10 per km with minimum fare of ₱10)
       setDistance(Number(distanceInKm));
-      setCost(Number(distanceInKm) * 10);
+      const calculatedCost = Number(distanceInKm) * 10;
+      setCost(calculatedCost < 10 ? 10 : calculatedCost);
 
       // Draw line between markers
       const latlngs = [

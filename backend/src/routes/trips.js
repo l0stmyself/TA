@@ -11,6 +11,8 @@ router.post('/', auth, async (req, res) => {
       pickupLocation: req.body.pickupLocation,
       dropLocation: req.body.dropLocation,
       status: req.body.status,
+      distance: req.body.distance,
+      cost: req.body.cost,
       driverName: req.body.driver.name,
       driverContact: req.body.driver.contact,
       driverPhoto: req.body.driver.photo,

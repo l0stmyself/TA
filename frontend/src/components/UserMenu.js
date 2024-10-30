@@ -8,7 +8,7 @@ const UserMenu = ({ user, onLogout }) => {
     <div className="user-menu">
       <div className="user-menu-trigger" onClick={() => setIsOpen(!isOpen)}>
         <span style={{marginRight: '0.5rem'}}>{user.firstName}</span>
-        <i className="fas fa-chevron-down"></i>
+        <Link><i className="fas fa-chevron-down"></i></Link>
       </div>
       {isOpen && (
         <div className="user-menu-dropdown">
@@ -16,7 +16,7 @@ const UserMenu = ({ user, onLogout }) => {
             <i className="fas fa-car"></i> My Trips
           </Link>
           <div className="menu-item" onClick={onLogout}>
-            <i className="fas fa-sign-out-alt"></i> Logout
+            <Link><i className="fas fa-sign-out-alt"></i> Logout</Link>
           </div>
         </div>
       )}

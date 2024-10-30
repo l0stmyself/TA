@@ -7,6 +7,8 @@ class Trip {
       pickupLocation, 
       dropLocation, 
       status,
+      distance,
+      cost,
       driverName,
       driverContact,
       driverPhoto,
@@ -22,6 +24,8 @@ class Trip {
           pickup_location, 
           drop_location, 
           status,
+          distance,
+          cost,
           driver_name,
           driver_contact,
           driver_photo,
@@ -29,13 +33,15 @@ class Trip {
           vehicle_plate,
           driver_rating
         )
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
         RETURNING *`,
         [
           userId, 
           pickupLocation, 
           dropLocation, 
           status,
+          distance,
+          cost,
           driverName,
           driverContact,
           driverPhoto,
@@ -65,6 +71,8 @@ class Trip {
         pickupLocation: row.pickup_location,
         dropLocation: row.drop_location,
         status: row.status,
+        distance: row.distance,
+        cost: row.cost,
         createdAt: row.created_at,
         driver: {
           name: row.driver_name,
