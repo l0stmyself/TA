@@ -3,8 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import driver1Image from '../images/drivers/driver1.jpeg';
-import driver2Image from '../images/drivers/driver2.jpeg';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import ProtectedRoute from './ProtectedRoute';
@@ -13,7 +11,7 @@ const mockDrivers = [
   {
     id: 1,
     name: "John Doe",
-    photo: driver1Image,
+    photo: '/images/drivers/driver1.jpeg',
     contact: "+63 912 345 6789",
     rating: 4.8,
     vehicle: {
@@ -24,7 +22,7 @@ const mockDrivers = [
   {
     id: 2,
     name: "Jane Smith",
-    photo: driver2Image,
+    photo: '/images/drivers/driver2.jpeg',
     contact: "+63 923 456 7890",
     rating: 4.9,
     vehicle: {

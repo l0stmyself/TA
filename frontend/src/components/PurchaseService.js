@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import ProtectedRoute from './ProtectedRoute';
 
 const PurchaseService = () => {
+  const [stores, setStores] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  useEffect(() => {
+    const fetchStores = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/stores');
+        setStores(response.data);
+      } catch (error) {
+        console.error('Error fetching stores:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStores();
+  }, []);
+
+  const filteredStores = selectedCategory === 'all'
+    ? stores
+    : stores.filter(store => store.category === selectedCategory);
+
   return (
     <>
       <div className="breadcrumb">
@@ -21,19 +45,19 @@ const PurchaseService = () => {
             <h3>How It Works</h3>
             <div className="steps-container">
               <div className="step">
-                <i className="fas fa-list-alt step-icon"></i>
-                <h4>1. Place Your Order</h4>
-                <p>Tell us what you need and where to get it</p>
-              </div>
-              <div className="step">
-                <i className="fas fa-user-check step-icon"></i>
-                <h4>2. Driver Assignment</h4>
-                <p>We'll match you with a nearby driver</p>
+                <i className="fas fa-store step-icon"></i>
+                <h4>1. Select Store</h4>
+                <p>Choose from our partner stores</p>
               </div>
               <div className="step">
                 <i className="fas fa-shopping-cart step-icon"></i>
-                <h4>3. Purchase</h4>
-                <p>Your driver will buy the items</p>
+                <h4>2. Select Items</h4>
+                <p>Browse and add items to cart</p>
+              </div>
+              <div className="step">
+                <i className="fas fa-money-bill-wave step-icon"></i>
+                <h4>3. Place Order</h4>
+                <p>Confirm and pay for your order</p>
               </div>
               <div className="step">
                 <i className="fas fa-truck step-icon"></i>
@@ -43,32 +67,68 @@ const PurchaseService = () => {
             </div>
           </div>
 
-          <div className="order-form-card">
-            <h3>Place an Order</h3>
-            <form className="purchase-form">
-              <div className="form-group">
-                <input 
-                  type="text" 
-                  placeholder="Store Name"
-                  required 
-                />
+          <div className="stores-section">
+            <div className="category-filter">
+              <button 
+                className={`filter-btn ${selectedCategory === 'all' ? 'active' : ''}`}
+                onClick={() => setSelectedCategory('all')}
+              >
+                All Stores
+              </button>
+              <button 
+                className={`filter-btn ${selectedCategory === 'Groceries' ? 'active' : ''}`}
+                onClick={() => setSelectedCategory('Groceries')}
+              >
+                Groceries
+              </button>
+              <button 
+                className={`filter-btn ${selectedCategory === 'Stationary' ? 'active' : ''}`}
+                onClick={() => setSelectedCategory('Stationary')}
+              >
+                Stationary
+              </button>
+              <button 
+                className={`filter-btn ${selectedCategory === 'Medicines' ? 'active' : ''}`}
+                onClick={() => setSelectedCategory('Medicines')}
+              >
+                Medicines
+              </button>
+              <button 
+                className={`filter-btn ${selectedCategory === 'Food' ? 'active' : ''}`}
+                onClick={() => setSelectedCategory('Food')}
+              >
+                Food
+              </button>
+            </div>
+
+            {loading ? (
+              <div className="loading-spinner">
+                <i className="fas fa-spinner fa-spin"></i>
+                <p>Loading stores...</p>
               </div>
-              <div className="form-group">
-                <textarea 
-                  placeholder="List the items you need..."
-                  rows="4"
-                  required
-                ></textarea>
+            ) : (
+              <div className="stores-grid">
+                {filteredStores.map(store => (
+                  <Link 
+                    to={`/services/purchase/${store.id}`} 
+                    key={store.id} 
+                    className="store-card"
+                  >
+                    <div className="store-image">
+                      <img src={store.image_url} alt={store.name} />
+                    </div>
+                    <div className="store-info">
+                      <h3>{store.name}</h3>
+                      <span className="store-category">{store.category}</span>
+                      <span className="store-distance">
+                        <i className="fas fa-map-marker-alt"></i>
+                        {store.distance} km away
+                      </span>
+                    </div>
+                  </Link>
+                ))}
               </div>
-              <div className="form-group">
-                <input 
-                  type="text" 
-                  placeholder="Delivery Location"
-                  required 
-                />
-              </div>
-              <button type="submit" className="btn btn-primary">Submit Order</button>
-            </form>
+            )}
           </div>
         </div>
 

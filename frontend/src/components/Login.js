@@ -24,7 +24,7 @@ const Login = ({ onLoginSuccess }) => {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(response.data.user));
       onLoginSuccess(response.data.user);
-      navigate('/');
+      navigate('/services');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
