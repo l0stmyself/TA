@@ -16,6 +16,9 @@ import WrappedCheckout from './components/Checkout';
 import CartIcon from './components/CartIcon';
 import WrappedOrderHistory from './components/OrderHistory';
 import WrappedStoreDetails from './components/StoreDetails';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -65,50 +68,73 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div className="header-wrapper">
-          <div className="header-content">
-            <h1>TA Transportation</h1>
+    <CartProvider>
+      <div className="App">
+        <header className="App-header">
+          <div className="header-wrapper">
+            <div className="header-content">
+              <h1>TA Transportation</h1>
+            </div>
+            <div className="header-actions">
+              {user ? (
+                <>
+                  <CartIcon />
+                  <UserMenu user={user} onLogout={handleLogout} />
+                </>
+              ) : (
+                <div className="auth-buttons">
+                  <Link to="/login" className="btn btn-primary">Login</Link>
+                  <Link to="/register" className="btn btn-secondary">Register Now</Link>
+                </div>
+              )}
+            </div>
+            <div className="header-tagline">
+              <p className="tagline">Your Campus Transportation & Delivery Solution</p>
+            </div>
           </div>
-          <div className="header-actions">
-            {user ? (
-              <>
-                <CartIcon />
-                <UserMenu user={user} onLogout={handleLogout} />
-              </>
-            ) : (
-              <div className="auth-buttons">
-                <Link to="/login" className="btn btn-primary">Login</Link>
-                <Link to="/register" className="btn btn-secondary">Register Now</Link>
-              </div>
-            )}
-          </div>
-          <div className="header-tagline">
-            <p className="tagline">Your Campus Transportation & Delivery Solution</p>
-          </div>
-        </div>
-      </header>
+        </header>
 
-      <main className="main-content">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/services/transportation" element={<WrappedTransportation />} />
-          <Route path="/services/transportation/motorcycle" element={<WrappedMotorcycleBooking />} />
-          <Route path="/services/transportation/motorcycle/trip-details" element={<WrappedTripDetails />} />
-          <Route path="/services/transportation/motorcycle/destination" element={<WrappedDestinationBooking />} />
-          <Route path="/services/purchase" element={<WrappedPurchaseService />} />
-          <Route path="/services/purchase/:id" element={<WrappedStoreDetails />} />
-          <Route path="/services/purchase/checkout" element={<WrappedCheckout />} />
-          <Route path="/my-trips" element={<WrappedMyTrips />} />
-          <Route path="/my-orders" element={<WrappedOrderHistory />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </main>
-    </div>
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/services/transportation" element={<WrappedTransportation />} />
+            <Route path="/services/transportation/motorcycle" element={<WrappedMotorcycleBooking />} />
+            <Route path="/services/transportation/motorcycle/trip-details" element={<WrappedTripDetails />} />
+            <Route path="/services/transportation/motorcycle/destination" element={<WrappedDestinationBooking />} />
+            <Route path="/services/purchase" element={<WrappedPurchaseService />} />
+            <Route path="/services/purchase/:id" element={<WrappedStoreDetails />} />
+            <Route path="/services/purchase/checkout" element={<WrappedCheckout onCartUpdate={(count) => {
+              // Find all CartIcon components and update their counts
+              const cartIcons = document.querySelectorAll('.cart-icon-container');
+              cartIcons.forEach(icon => {
+                const component = icon._reactInternalFiber.child.stateNode;
+                if (component && component.updateCartCount) {
+                  component.updateCartCount(count);
+                }
+              });
+            }} />} />
+            <Route path="/my-trips" element={<WrappedMyTrips />} />
+            <Route path="/my-orders" element={<WrappedOrderHistory />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </main>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark"
+        />
+      </div>
+    </CartProvider>
   );
 }
 

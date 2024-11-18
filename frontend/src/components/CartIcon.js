@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CartModal from './CartModal';
+import { useCart } from '../context/CartContext';
 
 const CartIcon = () => {
-  const [cartCount, setCartCount] = useState(0);
+  const { cartCount, updateCartCount } = useCart();
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -17,7 +18,7 @@ const CartIcon = () => {
       const response = await axios.get('http://localhost:4000/api/cart', {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
-      setCartCount(response.data.length);
+      updateCartCount(response.data.length);
     } catch (error) {
       console.error('Error fetching cart:', error);
     }
@@ -38,6 +39,7 @@ const CartIcon = () => {
         isOpen={showModal} 
         onClose={() => setShowModal(false)}
         onCheckout={handleCheckout}
+        onCartUpdate={updateCartCount}
       />
     </div>
   );

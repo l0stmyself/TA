@@ -1280,7 +1280,8 @@ code {
 }
 
 .cart-modal {
-  background: white;
+  background: var(--surface);
+  color: var(--on-surface);
   border-radius: 8px;
   padding: 1.5rem;
   width: 90%;
@@ -1316,11 +1317,12 @@ code {
   margin: 0 auto;
 }
 
-.order-summary {
-  background: white;
+.order-summary, .delivery-location, .order-card {
+  background: var(--surface);
+  color: var(--on-surface);
   border-radius: 8px;
   padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .delivery-location {

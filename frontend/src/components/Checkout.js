@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useCart } from '../context/CartContext';
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Checkout = () => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const markerRef = useRef(null);
+  const { updateCartCount } = useCart();
 
   useEffect(() => {
     fetchCartItems();
@@ -123,14 +125,14 @@ const Checkout = () => {
         }
       };
 
-      console.log(orderData);
-
       await axios.post('http://localhost:4000/api/orders', orderData, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       });
 
+      updateCartCount(0);
+
       toast.success('Order placed successfully!');
-      setTimeout(() => navigate('/my-orders'), 3000);
+      setTimeout(() => navigate('/my-orders'), 2000);
     } catch (error) {
       console.error('Order error:', error);
       toast.error('Failed to place order');
