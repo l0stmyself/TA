@@ -12,6 +12,10 @@ import WrappedDestinationBooking from './components/DestinationBooking';
 import WrappedPurchaseService from './components/PurchaseService';
 import WrappedMyTrips from './components/MyTrips';
 import LandingPage from './components/LandingPage'; // Assuming you move LandingPage to its own component
+import WrappedCheckout from './components/Checkout';
+import CartIcon from './components/CartIcon';
+import WrappedOrderHistory from './components/OrderHistory';
+import WrappedStoreDetails from './components/StoreDetails';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -69,7 +73,10 @@ function App() {
           </div>
           <div className="header-actions">
             {user ? (
-              <UserMenu user={user} onLogout={handleLogout} />
+              <>
+                <CartIcon />
+                <UserMenu user={user} onLogout={handleLogout} />
+              </>
             ) : (
               <div className="auth-buttons">
                 <Link to="/login" className="btn btn-primary">Login</Link>
@@ -94,7 +101,10 @@ function App() {
           <Route path="/services/transportation/motorcycle/trip-details" element={<WrappedTripDetails />} />
           <Route path="/services/transportation/motorcycle/destination" element={<WrappedDestinationBooking />} />
           <Route path="/services/purchase" element={<WrappedPurchaseService />} />
+          <Route path="/services/purchase/:id" element={<WrappedStoreDetails />} />
+          <Route path="/services/purchase/checkout" element={<WrappedCheckout />} />
           <Route path="/my-trips" element={<WrappedMyTrips />} />
+          <Route path="/my-orders" element={<WrappedOrderHistory />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>

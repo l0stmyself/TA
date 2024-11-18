@@ -3,6 +3,8 @@ const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const tripRoutes = require('./routes/trips');
 const storeRoutes = require('./routes/stores');
+const cartRoutes = require('./routes/cart');
+const orderRoutes = require('./routes/orders');
 
 const app = express();
 
@@ -11,6 +13,8 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/trips', tripRoutes);
 app.use('/api/stores', storeRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);
 
 const PORT = process.env.PORT || 4000;
 

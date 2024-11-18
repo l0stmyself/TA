@@ -45,6 +45,45 @@ CREATE TABLE IF NOT EXISTS items (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE IF NOT EXISTS carts (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    store_id INTEGER NOT NULL REFERENCES stores(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id, store_id)
+);
+
+CREATE TABLE IF NOT EXISTS cart_items (
+    id SERIAL PRIMARY KEY,
+    cart_id INTEGER NOT NULL REFERENCES carts(id),
+    item_id INTEGER NOT NULL REFERENCES items(id),
+    quantity INTEGER NOT NULL CHECK (quantity > 0 AND quantity <= 10),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(cart_id, item_id)
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(id),
+    store_id INTEGER NOT NULL REFERENCES stores(id),
+    delivery_address TEXT NOT NULL,
+    delivery_lat DECIMAL(10, 8) NOT NULL,
+    delivery_lng DECIMAL(11, 8) NOT NULL,
+    delivery_fee DECIMAL(10, 2) NOT NULL,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'PENDING',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+    id SERIAL PRIMARY KEY,
+    order_id INTEGER NOT NULL REFERENCES orders(id),
+    item_id INTEGER NOT NULL REFERENCES items(id),
+    quantity INTEGER NOT NULL,
+    price_at_time DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Seed data for stores
 INSERT INTO stores (name, category, distance, image_url) VALUES
 ('Campus Bookstore', 'Stationary', 0.5, '/images/stores/bookstore.jpg'),
