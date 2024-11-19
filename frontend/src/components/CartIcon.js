@@ -24,11 +24,6 @@ const CartIcon = () => {
     }
   };
 
-  const handleCheckout = () => {
-    setShowModal(false);
-    navigate('/services/purchase/checkout');
-  };
-
   return (
     <div className="cart-icon-container">
       <button className="cart-icon-btn" onClick={() => setShowModal(true)}>
@@ -38,8 +33,6 @@ const CartIcon = () => {
       <CartModal 
         isOpen={showModal} 
         onClose={() => setShowModal(false)}
-        onCheckout={handleCheckout}
-        onCartUpdate={updateCartCount}
       />
     </div>
   );

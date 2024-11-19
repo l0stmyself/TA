@@ -15,6 +15,9 @@ const UserMenu = ({ user, onLogout }) => {
           <Link to="/my-trips" className="menu-item">
             <i className="fas fa-car"></i> My Trips
           </Link>
+          <Link to="/my-orders" className="menu-item">
+            <i className="fas fa-shopping-bag"></i> My Orders
+          </Link>
           <div className="menu-item" onClick={onLogout}>
             <Link><i className="fas fa-sign-out-alt"></i> Logout</Link>
           </div>

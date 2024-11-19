@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useCart } from '../context/CartContext';
 
 const StoreDetails = () => {
   const { id } = useParams();
@@ -9,6 +10,7 @@ const StoreDetails = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quantities, setQuantities] = useState({});
+  const { updateCartCount } = useCart();
 
   useEffect(() => {
     const fetchStoreDetails = async () => {
@@ -62,6 +64,12 @@ const StoreDetails = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
+      
+      // Fetch updated cart count
+      const cartResponse = await axios.get('http://localhost:4000/api/cart', {
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+      });
+      updateCartCount(cartResponse.data.length);
       
       toast.success('Added to cart');
     } catch (error) {
