@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+const { logError } = require('../utils/logger');
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -12,7 +13,7 @@ const pool = new Pool({
 
 // Add event listener for errors
 pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
+  logError(err);
 });
 
 module.exports = pool;

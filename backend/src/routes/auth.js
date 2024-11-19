@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const pool = require('../db');
+const { logError } = require('../utils/logger');
 
 // Add JWT_SECRET to backend environment variables in docker-compose.yml
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
@@ -38,7 +39,7 @@ router.post('/register', async (req, res) => {
       user: newUser.rows[0]
     });
   } catch (error) {
-    console.error(error);
+    logError(error, req);
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -85,7 +86,7 @@ router.post('/login', async (req, res) => {
       }
     });
   } catch (error) {
-    console.error(error);
+    logError(error, req);
     res.status(500).json({ message: 'Server error' });
   }
 });
